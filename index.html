@@ -10,6 +10,7 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
+            transition: background-color 0.5s ease;
         }
         .survey-container {
             background: white;
@@ -18,6 +19,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             margin: auto;
+            transition: background-color 0.5s ease;
         }
         .question {
             font-size: 20px;
@@ -44,19 +46,23 @@
             align-items: center;
             justify-content: center;
         }
+        .gif-container {
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="survey-container" id="survey">
         <div id="step1" class="question">What color do you like the most?</div>
         <div id="options1" class="options">
-            <button onclick="nextStep(2)">Green</button>
-            <button onclick="nextStep(2)">Black</button>
-            <button onclick="nextStep(2)">Purple</button>
-            <button onclick="nextStep(2)">Red</button>
+            <button onclick="changeTheme('green')">Green</button>
+            <button onclick="changeTheme('black')">Black</button>
+            <button onclick="changeTheme('purple')">Purple</button>
+            <button onclick="changeTheme('red')">Red</button>
         </div><div id="step2" class="question" style="display: none;">Do you have a crush or a lover?</div>
     <div id="options2" class="options" style="display: none;">
-        <button onclick="nextStep(3)">No</button>
+        <button onclick="showGifThenNext(3)">No</button>
         <button onclick="nextStep(3)">Yes</button>
     </div>
 
@@ -65,6 +71,10 @@
         <button onclick="showRomanticScreen()">Yes</button>
         <button onclick="showRomanticScreen()">Yes</button>
     </div>
+
+    <div id="gif-container" class="gif-container">
+        <img src="https://media.tenor.com/NpxX43CMKcsAAAAM/omni-man-omni-man-are-you-sure.gif" alt="Omni-Man GIF" width="300">
+    </div>
 </div>
 
 <div id="romantic-screen" class="romantic-screen">
@@ -72,11 +82,23 @@
 </div>
 
 <script>
+    function changeTheme(color) {
+        document.body.style.backgroundColor = color;
+        document.querySelector('.survey-container').style.backgroundColor = color === 'black' ? '#333' : color;
+        document.querySelector('.survey-container').style.color = color === 'black' ? 'white' : 'black';
+        nextStep(2);
+    }
+
     function nextStep(step) {
         document.getElementById(`step${step - 1}`).style.display = 'none';
         document.getElementById(`options${step - 1}`).style.display = 'none';
         document.getElementById(`step${step}`).style.display = 'block';
         document.getElementById(`options${step}`).style.display = 'block';
+    }
+
+    function showGifThenNext(step) {
+        document.getElementById('gif-container').style.display = 'block';
+        nextStep(step);
     }
 
     function showRomanticScreen() {
