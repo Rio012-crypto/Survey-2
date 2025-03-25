@@ -53,9 +53,10 @@
             flex-direction: column;
             overflow: hidden;
         }
-        .bouncing-gif {
+        .spinning-gif {
             position: absolute;
             width: 150px;
+            animation: spinAround 4s linear infinite;
         }
         .romantic-text {
             position: absolute;
@@ -63,9 +64,12 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        .gif-container {
-            display: none;
-            margin-top: 20px;
+        @keyframes spinAround {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(200px) rotate(0deg); }
+            25% { transform: translate(-50%, -50%) rotate(90deg) translateX(200px) rotate(-90deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) translateX(200px) rotate(-180deg); }
+            75% { transform: translate(-50%, -50%) rotate(270deg) translateX(200px) rotate(-270deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(200px) rotate(-360deg); }
         }
     </style>
 </head>
@@ -105,8 +109,8 @@
 
 <div id="romantic-screen" class="romantic-screen" style="display: none;">
     <div class="romantic-text">❤️ Mica X Haruki ❤️</div>
-    <img id="gif1" class="bouncing-gif" src="https://tenor.com/view/i-love-you-i-love-you-so-much-i-love-you-very-much-love-you-love-gif-12150120610785643244.gif" alt="Love GIF">
-    <img id="gif2" class="bouncing-gif" src="https://tenor.com/view/shrek-shrek-rizz-rizz-gif-11157824601050747846.gif" alt="Shrek Rizz GIF">
+    <img id="gif1" class="spinning-gif" src="https://tenor.com/view/i-love-you-i-love-you-so-much-i-love-you-very-much-love-you-love-gif-12150120610785643244.gif" alt="Love GIF">
+    <img id="gif2" class="spinning-gif" src="https://tenor.com/view/shrek-shrek-rizz-rizz-gif-11157824601050747846.gif" alt="Shrek Rizz GIF">
 </div>
 
 <script>
@@ -129,28 +133,8 @@
     function showRomanticScreen() {
         document.getElementById('survey').style.display = 'none';
         document.getElementById('romantic-screen').style.display = 'flex';
-        startBouncing();
-    }
-
-    function startBouncing() {
-        const gifs = document.querySelectorAll('.bouncing-gif');
-        gifs.forEach(gif => {
-            let x = Math.random() * window.innerWidth * 0.8;
-            let y = Math.random() * window.innerHeight * 0.8;
-            let dx = (Math.random() - 0.5) * 6;
-            let dy = (Math.random() - 0.5) * 6;
-            function animate() {
-                x += dx;
-                y += dy;
-                if (x <= 0 || x + gif.clientWidth >= window.innerWidth) dx *= -1;
-                if (y <= 0 || y + gif.clientHeight >= window.innerHeight) dy *= -1;
-                gif.style.transform = `translate(${x}px, ${y}px)`;
-                requestAnimationFrame(animate);
-            }
-            animate();
-        });
     }
 </script>
 
 </body>
-</html>
+                                                                                    </html>
