@@ -43,12 +43,12 @@
             font-family: cursive;
             text-align: center;
             height: 100vh;
-            align-items: center;
-            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-        .gif-container {
-            display: none;
-            margin-top: 20px;
+        .bouncing-gif {
+            position: absolute;
+            width: 150px;
         }
     </style>
 </head>
@@ -71,14 +71,12 @@
         <button onclick="showRomanticScreen()">Yes</button>
         <button onclick="showRomanticScreen()">Yes</button>
     </div>
-
-    <div id="gif-container" class="gif-container">
-        <img src="https://media.tenor.com/NpxX43CMKcsAAAAM/omni-man-omni-man-are-you-sure.gif" alt="Omni-Man GIF" width="300">
-    </div>
 </div>
 
 <div id="romantic-screen" class="romantic-screen">
     ❤️ Mica X Haruki ❤️
+    <img id="gif1" class="bouncing-gif" src="https://tenor.com/view/i-love-you-i-love-you-so-much-i-love-you-very-much-love-you-love-gif-12150120610785643244.gif" alt="Love GIF">
+    <img id="gif2" class="bouncing-gif" src="https://tenor.com/view/shrek-shrek-rizz-rizz-gif-11157824601050747846.gif" alt="Shrek Rizz GIF">
 </div>
 
 <script>
@@ -104,6 +102,32 @@
     function showRomanticScreen() {
         document.getElementById('survey').style.display = 'none';
         document.getElementById('romantic-screen').style.display = 'flex';
+        startBouncingGifs();
+    }
+
+    function startBouncingGifs() {
+        let gifs = [
+            { el: document.getElementById('gif1'), dx: 2, dy: 2 },
+            { el: document.getElementById('gif2'), dx: -2, dy: -2 }
+        ];
+        gifs.forEach(gif => {
+            gif.x = Math.random() * (window.innerWidth - 150);
+            gif.y = Math.random() * (window.innerHeight - 150);
+            gif.el.style.left = gif.x + 'px';
+            gif.el.style.top = gif.y + 'px';
+        });
+        function moveGifs() {
+            gifs.forEach(gif => {
+                gif.x += gif.dx;
+                gif.y += gif.dy;
+                if (gif.x <= 0 || gif.x + 150 >= window.innerWidth) gif.dx *= -1;
+                if (gif.y <= 0 || gif.y + 150 >= window.innerHeight) gif.dy *= -1;
+                gif.el.style.left = gif.x + 'px';
+                gif.el.style.top = gif.y + 'px';
+            });
+            requestAnimationFrame(moveGifs);
+        }
+        moveGifs();
     }
 </script>
 
