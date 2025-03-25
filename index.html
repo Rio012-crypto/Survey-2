@@ -43,12 +43,15 @@
             font-family: cursive;
             text-align: center;
             height: 100vh;
-            position: relative;
-            overflow: hidden;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            overflow: hidden;
         }
         .bouncing-gif {
             position: absolute;
@@ -59,6 +62,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+        #gif-container {
+            display: none;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -72,11 +79,11 @@
             <button onclick="changeTheme('red')">Red</button>
         </div><div id="step2" class="question" style="display: none;">Do you have a crush or a lover?</div>
     <div id="options2" class="options" style="display: none;">
-        <button onclick="nextStep(3, true)">No</button>
-        <button onclick="nextStep(3, false)">Yes</button>
+        <button onclick="showGifThenNext()">No</button>
+        <button onclick="nextStep(3)">Yes</button>
     </div>
 
-    <div id="gif-container" style="display: none;">
+    <div id="gif-container">
         <img src="https://media.tenor.com/NpxX43CMKcsAAAAM/omni-man-omni-man-are-you-sure.gif" alt="Omni-Man" style="width: 100%; max-width: 400px;">
     </div>
 
@@ -87,7 +94,7 @@
     </div>
 </div>
 
-<div id="romantic-screen" class="romantic-screen">
+<div id="romantic-screen" class="romantic-screen" style="display: none;">
     <div class="romantic-text">❤️ Mica X Haruki ❤️</div>
     <img id="gif1" class="bouncing-gif" src="https://tenor.com/view/i-love-you-i-love-you-so-much-i-love-you-very-much-love-you-love-gif-12150120610785643244.gif" alt="Love GIF">
     <img id="gif2" class="bouncing-gif" src="https://tenor.com/view/shrek-shrek-rizz-rizz-gif-11157824601050747846.gif" alt="Shrek Rizz GIF">
@@ -98,23 +105,24 @@
         document.body.style.backgroundColor = color;
         document.querySelector('.survey-container').style.backgroundColor = color === 'black' ? '#333' : color;
         document.querySelector('.survey-container').style.color = color === 'black' ? 'white' : 'black';
-        nextStep(2, false);
+        nextStep(2);
     }
 
-    function nextStep(step, showGif) {
+    function nextStep(step) {
         document.getElementById(`step${step - 1}`).style.display = 'none';
         document.getElementById(`options${step - 1}`).style.display = 'none';
-        if (showGif) {
-            document.getElementById('gif-container').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('gif-container').style.display = 'none';
-                document.getElementById(`step${step}`).style.display = 'block';
-                document.getElementById(`options${step}`).style.display = 'block';
-            }, 3000);
-        } else {
-            document.getElementById(`step${step}`).style.display = 'block';
-            document.getElementById(`options${step}`).style.display = 'block';
-        }
+        document.getElementById(`step${step}`).style.display = 'block';
+        document.getElementById(`options${step}`).style.display = 'block';
+    }
+
+    function showGifThenNext() {
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('options2').style.display = 'none';
+        document.getElementById('gif-container').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('gif-container').style.display = 'none';
+            nextStep(3);
+        }, 3000);
     }
 
     function showRomanticScreen() {
@@ -150,4 +158,4 @@
 </script>
 
 </body>
-    </html>
+</html>
