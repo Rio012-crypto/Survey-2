@@ -129,6 +129,26 @@
     function showRomanticScreen() {
         document.getElementById('survey').style.display = 'none';
         document.getElementById('romantic-screen').style.display = 'flex';
+        startBouncing();
+    }
+
+    function startBouncing() {
+        const gifs = document.querySelectorAll('.bouncing-gif');
+        gifs.forEach(gif => {
+            let x = Math.random() * window.innerWidth * 0.8;
+            let y = Math.random() * window.innerHeight * 0.8;
+            let dx = (Math.random() - 0.5) * 6;
+            let dy = (Math.random() - 0.5) * 6;
+            function animate() {
+                x += dx;
+                y += dy;
+                if (x <= 0 || x + gif.clientWidth >= window.innerWidth) dx *= -1;
+                if (y <= 0 || y + gif.clientHeight >= window.innerHeight) dy *= -1;
+                gif.style.transform = `translate(${x}px, ${y}px)`;
+                requestAnimationFrame(animate);
+            }
+            animate();
+        });
     }
 </script>
 
