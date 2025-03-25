@@ -63,7 +63,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        #gif-container {
+        .gif-container {
             display: none;
             margin-top: 20px;
         }
@@ -79,12 +79,21 @@
             <button onclick="changeTheme('red')">Red</button>
         </div><div id="step2" class="question" style="display: none;">Do you have a crush or a lover?</div>
     <div id="options2" class="options" style="display: none;">
-        <button onclick="showGifThenNext()">No</button>
+        <button onclick="nextStep(21)">No</button>
         <button onclick="nextStep(3)">Yes</button>
     </div>
 
-    <div id="gif-container">
-        <img src="https://media.tenor.com/NpxX43CMKcsAAAAM/omni-man-omni-man-are-you-sure.gif" alt="Omni-Man" style="width: 100%; max-width: 400px;">
+    <div id="step21" class="question" style="display: none;">Are you sure?</div>
+    <img id="gif21" class="gif-container" src="https://media.tenor.com/NpxX43CMKcsAAAAM/omni-man-omni-man-are-you-sure.gif" alt="Omni-Man" style="display: none; width: 100%; max-width: 400px;">
+    <div id="options21" class="options" style="display: none;">
+        <button onclick="nextStep(3)">Yes</button>
+        <button onclick="nextStep(22)">No</button>
+    </div>
+
+    <div id="step22" class="question" style="display: none;">You got Rickrolled!</div>
+    <img id="gif22" class="gif-container" src="https://tenor.com/view/rickroll-roll-rick-never-gonna-give-you-up-never-gonna-gif-22954713.gif" alt="Rickroll" style="display: none; width: 100%; max-width: 400px;">
+    <div id="options22" class="options" style="display: none;">
+        <button onclick="nextStep(2)">Fine, I'll admit</button>
     </div>
 
     <div id="step3" class="question" style="display: none;">Do you have a crush or a lover?</div>
@@ -109,53 +118,19 @@
     }
 
     function nextStep(step) {
-        document.getElementById(`step${step - 1}`).style.display = 'none';
-        document.getElementById(`options${step - 1}`).style.display = 'none';
+        document.querySelectorAll('.question, .options, .gif-container').forEach(el => el.style.display = 'none');
         document.getElementById(`step${step}`).style.display = 'block';
         document.getElementById(`options${step}`).style.display = 'block';
-    }
-
-    function showGifThenNext() {
-        document.getElementById('step2').style.display = 'none';
-        document.getElementById('options2').style.display = 'none';
-        document.getElementById('gif-container').style.display = 'block';
-        setTimeout(() => {
-            document.getElementById('gif-container').style.display = 'none';
-            nextStep(3);
-        }, 3000);
+        if (document.getElementById(`gif${step}`)) {
+            document.getElementById(`gif${step}`).style.display = 'block';
+        }
     }
 
     function showRomanticScreen() {
         document.getElementById('survey').style.display = 'none';
         document.getElementById('romantic-screen').style.display = 'flex';
-        startBouncingGifs();
-    }
-
-    function startBouncingGifs() {
-        let gifs = [
-            { el: document.getElementById('gif1'), dx: 2, dy: 2 },
-            { el: document.getElementById('gif2'), dx: -2, dy: -2 }
-        ];
-        gifs.forEach(gif => {
-            gif.x = Math.random() * (window.innerWidth - 150);
-            gif.y = Math.random() * (window.innerHeight - 150);
-            gif.el.style.left = gif.x + 'px';
-            gif.el.style.top = gif.y + 'px';
-        });
-        function moveGifs() {
-            gifs.forEach(gif => {
-                gif.x += gif.dx;
-                gif.y += gif.dy;
-                if (gif.x <= 0 || gif.x + 150 >= window.innerWidth) gif.dx *= -1;
-                if (gif.y <= 0 || gif.y + 150 >= window.innerHeight) gif.dy *= -1;
-                gif.el.style.left = gif.x + 'px';
-                gif.el.style.top = gif.y + 'px';
-            });
-            requestAnimationFrame(moveGifs);
-        }
-        moveGifs();
     }
 </script>
 
 </body>
-</html>
+        </html>
